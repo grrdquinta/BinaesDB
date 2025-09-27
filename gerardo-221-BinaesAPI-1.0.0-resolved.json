@@ -29,93 +29,929 @@
     }
   ],
   "paths": {
-    "/inventory": {
+    "/books": {
       "get": {
-        "tags": [
-          "developers"
-        ],
-        "summary": "searches inventory",
-        "description": "By passing in the appropriate options, you can search for\navailable inventory in the system\n",
-        "operationId": "searchInventory",
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-books",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-books",
         "parameters": [
           {
-            "name": "searchString",
-            "in": "query",
-            "description": "pass an optional search string for looking up inventory",
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/books_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/books/:id": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-books-:id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "summary": "Your PUT endpoint",
+        "operationId": "put-books-:id",
+        "parameters": [
+          {
+            "name": "auhtToken",
+            "in": "cookie",
             "required": false,
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "skip",
+            "name": "id",
             "in": "query",
-            "description": "number of records to skip for pagination",
             "required": false,
             "schema": {
-              "minimum": 0,
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "maximum number of records to return",
-            "required": false,
-            "schema": {
-              "maximum": 50,
-              "minimum": 0,
-              "type": "integer",
-              "format": "int32"
+              "type": "string"
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "search results matching criteria",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/InventoryItem"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "bad input parameter"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "admins"
-        ],
-        "summary": "adds an inventory item",
-        "description": "Adds an item to the system",
-        "operationId": "addInventory",
         "requestBody": {
-          "description": "Inventory item to add",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/InventoryItem"
+                "$ref": "#/components/schemas/books_id_body"
               }
             }
           }
         },
         "responses": {
-          "201": {
-            "description": "item created"
+          "200": {
+            "description": "OK"
           },
-          "400": {
-            "description": "invalid input, object invalid"
+          "404": {
+            "description": "Not Found"
           },
-          "409": {
-            "description": "an existing item already exists"
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "summary": "Your DELETE endpoint",
+        "operationId": "delete-books-:id",
+        "parameters": [
+          {
+            "name": "idBook",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/registerClients": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-registerClients",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registerClients_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/verifyEmail": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-verifyEmail",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/verifyEmail_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/logout": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-logout",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/recoveryPassword/requestCode": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-recoveryPassword-requestCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/recoveryPassword_requestCode_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/recoveryPassword/verifyCode": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-recoveryPassword-verifyCode",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/recoveryPassword_verifyCode_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/recoveryPassword/newPassword": {
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-recoveryPassword-newPassword",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/authors": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-authors",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-authors",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/authors_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/authors/:id": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-authors-:id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "summary": "Your PUT endpoint",
+        "operationId": "put-authors-:id",
+        "parameters": [
+          {
+            "name": "idAuthor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/authors_id_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "summary": "Your DELETE endpoint",
+        "operationId": "delete-authors-:id",
+        "parameters": [
+          {
+            "name": "idAuthor",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-categories",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-categories",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/categories_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/categories/:id": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-categories-:id",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "summary": "Your PUT endpoint",
+        "operationId": "put-categories-:id",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idCategory",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/categories_id_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "summary": "Your DELETE endpoint",
+        "operationId": "delete-categories-:id",
+        "parameters": [
+          {
+            "name": "idCategory",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/clients": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-clients",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/clients/:id": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-clients-:id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "summary": "Your PUT endpoint",
+        "operationId": "put-clients-:id",
+        "parameters": [
+          {
+            "name": "idClient",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/clients_id_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "summary": "Your DELETE endpoint",
+        "operationId": "delete-clients-:id",
+        "parameters": [
+          {
+            "name": "idClient",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/loans": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-loans",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-loans",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loans_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/loans/:id": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-loans-:id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "summary": "Your PUT endpoint",
+        "operationId": "put-loans-:id",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLoan",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loans_id_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "summary": "Your DELETE endpoint",
+        "operationId": "delete-loans-:id",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "idLoan",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-reviews",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [],
+        "summary": "Your POST endpoint",
+        "operationId": "post-reviews",
+        "parameters": [
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/reviews_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/reviews/:id": {
+      "get": {
+        "tags": [],
+        "summary": "Your GET endpoint",
+        "operationId": "get-reviews-:id",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "summary": "Your PUT endpoint",
+        "operationId": "put-reviews-:id",
+        "parameters": [
+          {
+            "name": "idReview",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/reviews_id_body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "summary": "Your DELETE endpoint",
+        "operationId": "delete-reviews-:id",
+        "parameters": [
+          {
+            "name": "idReview",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "authToken",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -123,52 +959,421 @@
   },
   "components": {
     "schemas": {
-      "InventoryItem": {
-        "required": [
-          "id",
-          "manufacturer",
-          "name",
-          "releaseDate"
-        ],
+      "books_body": {
         "type": "object",
         "properties": {
-          "id": {
+          "title": {
             "type": "string",
-            "format": "uuid",
-            "example": "d290f1ee-6c54-4b01-90e6-d701748f0851"
+            "x-stoplight": {
+              "id": "xbqjlponyceuz"
+            }
           },
-          "name": {
+          "summary": {
             "type": "string",
-            "example": "Widget Adapter"
+            "x-stoplight": {
+              "id": "okvatdm306q7t"
+            }
           },
-          "releaseDate": {
+          "isbn": {
             "type": "string",
-            "format": "date-time",
-            "example": "2016-08-29T09:12:33.001Z"
+            "x-stoplight": {
+              "id": "jlug7s9lm6atf"
+            }
           },
-          "manufacturer": {
-            "$ref": "#/components/schemas/Manufacturer"
+          "idAuthors": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "vkdptrq2a3a5b"
+            }
+          },
+          "tags": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "fan476prlvt45"
+            }
+          },
+          "coverUrl": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "wtqbvxduxk13d"
+            }
+          },
+          "publishedDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "5azyqhn4tonsd"
+            }
+          },
+          "copiesAvailable": {
+            "type": "number",
+            "x-stoplight": {
+              "id": "36j7kmc9xhtky"
+            }
+          },
+          "idCategories": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "2t7a54xust8cz"
+            }
           }
         }
       },
-      "Manufacturer": {
-        "required": [
-          "name"
-        ],
+      "books_id_body": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "v0r5sbolbgmgd"
+            }
+          },
+          "summary": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "y5r3wgbqvjsva"
+            }
+          },
+          "isbn": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "zv1xgrdonp2jn"
+            }
+          },
+          "idAuthors": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "q9lfssc6o8dpu"
+            }
+          },
+          "tags": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "qasjclt40dehe"
+            }
+          },
+          "coverUrl": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "sbtj0rgjupx83"
+            }
+          },
+          "publishedDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "eobxfg1kr4ey7"
+            }
+          },
+          "copiesAvailable": {
+            "type": "number",
+            "x-stoplight": {
+              "id": "o1b4l070dtsbx"
+            }
+          },
+          "idCategories": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ymp0h1mva5skg"
+            }
+          }
+        }
+      },
+      "registerClients_body": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
-            "example": "ACME Corporation"
+            "x-stoplight": {
+              "id": "140xdmzj126xp"
+            }
           },
-          "homePage": {
+          "email": {
             "type": "string",
-            "format": "url",
-            "example": "https://www.acme-corp.com"
+            "x-stoplight": {
+              "id": "7ktcmwwm5n86r"
+            }
           },
-          "phone": {
+          "password": {
             "type": "string",
-            "example": "408-867-5309"
+            "x-stoplight": {
+              "id": "68j6p87wqd7we"
+            }
+          }
+        }
+      },
+      "verifyEmail_body": {
+        "type": "object",
+        "properties": {
+          "verificationCode": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "vyq57egqakpk9"
+            }
+          }
+        }
+      },
+      "login_body": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "g8xj3tlx1ems2"
+            }
+          },
+          "password": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "sui2lrxv6lut1"
+            }
+          }
+        }
+      },
+      "recoveryPassword_requestCode_body": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "i1frub9612ivw"
+            }
+          }
+        }
+      },
+      "recoveryPassword_verifyCode_body": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "9fcjpvd1mx9zr"
+            }
+          }
+        }
+      },
+      "authors_body": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "1bpc3oe9g8c24"
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "iusmlibpskr4z"
+            }
+          },
+          "bio": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "8h2nya1mc4q9d"
+            }
+          },
+          "birthDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "crrdfly3hojsv"
+            }
+          }
+        }
+      },
+      "authors_id_body": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "kbrb5usb5i0kr"
+            }
+          },
+          "lastName": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "yzxiba3nyfohc"
+            }
+          },
+          "bio": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "bj2lc92q2owet"
+            }
+          },
+          "birthDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "l1109e6kqdsh4"
+            }
+          }
+        }
+      },
+      "categories_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "wdyoukie6ebje"
+            }
+          },
+          "description": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "bsr2xe2wsyb6w"
+            }
+          }
+        }
+      },
+      "categories_id_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "r7xswu8gm1dmc"
+            }
+          },
+          "description": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "avqmgwf7ni2eg"
+            }
+          }
+        }
+      },
+      "clients_id_body": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "6ykmtq32bipad"
+            }
+          },
+          "email": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "21s1jhp8mqe9t"
+            }
+          },
+          "isVerified": {
+            "type": "boolean",
+            "x-stoplight": {
+              "id": "9sobc5wf9je6b"
+            }
+          }
+        }
+      },
+      "loans_body": {
+        "type": "object",
+        "properties": {
+          "idClient": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "w3hqkzoulgyo7"
+            }
+          },
+          "idBook": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "hvws0v5vf0qlb"
+            }
+          },
+          "dueDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "e1906e24agk1u"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "6cperrycvci9s"
+            }
+          }
+        }
+      },
+      "loans_id_body": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "y729dzdzd2lyw"
+            }
+          },
+          "returnDate": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "mrqkdkdaepqdr"
+            }
+          },
+          "notes": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "33346na1lv6w7"
+            }
+          }
+        }
+      },
+      "reviews_body": {
+        "type": "object",
+        "properties": {
+          "idBook": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "718mk75u6lx16"
+            }
+          },
+          "rating": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "tjhmnsir6xj3t"
+            }
+          },
+          "comment": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "savz9x1a0at2j"
+            }
+          },
+          "idClient": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "blaklc2xckjco"
+            }
+          }
+        }
+      },
+      "reviews_id_body": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "90p1o46p1hg02"
+            }
+          },
+          "comment": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "nacp3yuh4be5j"
+            }
+          },
+          "userId": {
+            "type": "string",
+            "x-stoplight": {
+              "id": "ch3hz4hngyyr6"
+            }
           }
         }
       }
