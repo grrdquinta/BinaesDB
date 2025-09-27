@@ -4,6 +4,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import path from "path";
 import fs from "fs";
+import swaggerUI from 'swagger-ui-express';
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import { config } from "./src/config.js";
@@ -25,7 +26,11 @@ if (!fs.existsSync('uploads')) {
   fs.mkdirSync('uploads');
 }
 
-// Configuración de Swagger
+//Archivo Swagger
+const swaggerDocument = JSON.parse(fs.readFileSync(
+    path.resolve("./gerardo-221-BinaesAPI-1.0.0-resolved.json"),
+    "utf-8")
+)
 
 
 
@@ -62,7 +67,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
 // Documentación Swagger
-//app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // Rutas principales
 app.use("/api", authRoutes);
